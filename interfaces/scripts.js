@@ -39,6 +39,7 @@ window.onload = function () {
 }
 
 function makeAction() {
+	console.log("make action");
 	var button = document.getElementById("button");
 	button.innerText = "Enviando...";
 	button.disabled = true;
