@@ -98,7 +98,7 @@
             ];
             $jsonBody = json_encode($message);
             
-            $ch = curl_init('https://fcm.googleapis.com/v1/projects/esp32-firebase-5a830/messages:send');
+            $ch = curl_init('https://fcm.googleapis.com/v1/projects/mysamples-4f48d/messages:send');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonBody);
