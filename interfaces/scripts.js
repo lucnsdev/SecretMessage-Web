@@ -56,5 +56,4 @@ function makeAction() {
 		}
 	}
 	http.send(params);
-	printLog("notifyAndroidApp");
 }
