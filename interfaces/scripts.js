@@ -30,7 +30,7 @@ window.onload = function () {
 		}, 1000);
 	}
 
-	document.addEventListener("keydown", (event) => {
+	document.addEventListener("keyup", (event) => {
 		const keyName = event.key;
 		if (keyName == "Enter") {
 			makeAction();
@@ -39,22 +39,22 @@ window.onload = function () {
 }
 
 function makeAction() {
-	console.log("make action");
 	var button = document.getElementById("button");
 	button.innerText = "Enviando...";
 	button.disabled = true;
 	var inputText = document.getElementById("textarea_message");
 	inputText.disabled = true;
 
-	var params = '{\"message\":\"' + inputText.value + '\"}';
+	var params = {"message": inputText.value};
 	var http = new XMLHttpRequest();
 	http.open('POST', "../php/main.php", true);
 	http.onreadystatechange = function () {
-		console.log("responseCode: " + http.status);
-		console.log("responseText: " + http.responseText);
+		//console.log("responseCode: " + http.status);
+		//console.log("state: " + http.readyState);
+		//console.log("responseText: " + http.responseText);
 		if (http.readyState == 4 && http.status == 204) {
-			//window.location.replace("sent.htm");
+			window.location.replace("sent.htm");
 		}
 	}
-	http.send(params);
+	http.send(JSON.stringify(params));
 }

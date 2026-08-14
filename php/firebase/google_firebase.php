@@ -3,9 +3,11 @@
     class GoogleFirebase {
     
     	private $authDataFilePath;
+    	private $projectName; // = "mysamples-4f48d"; // not work
     	
     	public function __construct() {
             $this->authDataFilePath = __DIR__ . "/data/auth_data.json";
+            $this->$projectName = "mysamples-4f48d";
         }
     	
     	function base64UrlEncode($data) {
@@ -27,8 +29,8 @@
             
     		$timestamp = time();
             $payload = $this->base64UrlEncode(json_encode([
-                "iss" => "firebase-adminsdk-fbsvc@esp32-firebase-5a830.iam.gserviceaccount.com",
-                "sub" => "firebase-adminsdk-fbsvc@esp32-firebase-5a830.iam.gserviceaccount.com",
+                "iss" => "firebase-adminsdk-fbsvc@" . $this->$projectName . ".iam.gserviceaccount.com",
+                "sub" => "firebase-adminsdk-fbsvc@" . $this->$projectName . ".iam.gserviceaccount.com",
     			"aud" => "https://oauth2.googleapis.com/token",
     			"iat" => $timestamp,
     			"exp" => $timestamp + 3600,
@@ -42,7 +44,7 @@
                 'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 'assertion' => $header . '.' . $payload . '.' . $signature
             ]);
-    		/*
+            /*
             echo "PrivateKey:" . $privateKey . "\n";
             echo "Header:" . $header . "\n";
             echo "Payload:" . $payload . "\n";
@@ -60,8 +62,8 @@
             
             $response = curl_exec($ch);
     		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    		//echo "Response code: " . $response_code . "\n";
-    		//echo "Response: " . $response . "\n";
+    		echo "Response code: " . $response_code . "\n";
+    		echo "Response: " . $response . "\n";
             curl_close($ch);
             
             if ($response_code == 200) {
@@ -98,7 +100,7 @@
             ];
             $jsonBody = json_encode($message);
             
-            $ch = curl_init('https://fcm.googleapis.com/v1/projects/mysamples-4f48d/messages:send');
+            $ch = curl_init("https://fcm.googleapis.com/v1/projects/" . $this->$projectName . "/messages:send");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonBody);

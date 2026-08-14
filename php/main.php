@@ -20,8 +20,11 @@
     		    }
     		}
 			//$firebase->sendToDatabase($bodyJson);    		
-    		if ($firebase->sendMessage($bodyJson)) http_response_code(204);
-            else http_response_code(401);
+    		if ($firebase->sendMessage($bodyJson)) {
+                http_response_code(204);
+            } else {
+                http_response_code(401);
+            }
 			return;
 	    }
     	http_response_code(401);
