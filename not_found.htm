@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Página não encontrada</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0d1117;
+            color: #e6edf3;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+        }
+
+        .error {
+            font-size: clamp(100px, 25vw, 180px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -8px;
+            color: #58a6ff;
+            text-shadow: 0 0 40px rgba(88, 166, 255, 0.2);
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #f0f6fc;
+        }
+
+        p {
+            margin-top: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #8b949e;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: #238636;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            background: #2ea043;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+        <div class="error">404</div>
+        <h1>Página não encontrada</h1>
+        <p>
+            Parece que a página que você está procurando
+            não existe ou foi movida.
+        </p>
+        <a href="/" class="button">
+            Voltar para o início
+        </a>
+    </main>
+
+</body>
+
+</html>

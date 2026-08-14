@@ -25,7 +25,9 @@
 			return;
 	    }
     	http_response_code(401);
-	} else { // GET
-    	http_response_code(204);
+	} else { // GET    
+        $content = file_get_contents("../not_found.htm");
+        echo $content;
+    	http_response_code(200);
 	}
 ?>
