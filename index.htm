@@ -12,16 +12,17 @@
 
 <body>
 	<div class="div_root">
+		<span class="span_title">Mensagem Anônima</span>
 		<div class="div_card">
-			<div class="horizontal_align_items">
+			<div class="center_horizontal">
 				<img src="images/lucns.png" alt="Imagem de perfil" class="profile_image">
-				<div class="margin_horizontal_16">
+				<div class="div_information">
 					<p class="user_name">@lucns</p>
 					<p class="user_description">Me envie uma mensagem. Vou receber em tempo real no smartphone.</p>
-					<div class="divider margin_top_8"></div>
-					<div class="horizontal_align_items margin_top_8">
+					<div class="divider"></div>
+					<div class="margin_top_8">
 					</div>
-					<div class="horizontal_align_items">
+					<div class="div_status">
 						<p class="text_bold">Status:</p>
 						<div class="margin_left_8">
 							<p class="text_regular margin_left_8">Ativo</p>
@@ -29,23 +30,30 @@
 					</div>
 				</div>
 			</div>
-			<div class="margin_top_32">
-				<form>
-					<div class="div_textarea">
-						<div class="margin_left_8">
-							<p class="text_regular margin_left_8">Mensagem:</p>
-						</div>
-						<div class="margin_top_16"><textarea type="text" id="textarea_message" maxlength="1024"
-								placeholder="Escreva algo aqui (Max. 1024 caracteres)."></textarea></div>
-						<div class="div_counter margin_top_16 margin_right_8">
-							<p id="text_counter" class="text_counter">0/1024</p>
+
+			<form>
+				<div class="div_textarea">
+					<div class="margin_left_8 margin_top_16">
+						<p class="text_regular">Mensagem:</p>
+					</div>
+					<div class="margin_top_16"><textarea type="text" id="textarea_message" maxlength="1024"
+							placeholder="Escreva algo aqui (Max. 1024 caracteres)."></textarea></div>
+					<div class="div_counter margin_right_8">
+						<p id="text_counter" class="text_counter">0/1024</p>
+					</div>
+				</div>
+				<div class="div_root_button">
+					<div id="div_loading" class="div_loading center_horizontal">
+						<div class="loader"></div>
+						<div class="margin_left_16 margin_top_8">
+							<p class="text_sending">Enviando...</p>
 						</div>
 					</div>
-					<div class="div_button">
+					<div class="center_horizontal div_button">
 						<button id="button" type="button" disabled>Enviar</button>
 					</div>
-				</form>
-			</div>
+				</div>
+			</form>
 		</div>
 		<div class="bottom_right_overlay">
 			<button id="button_dev" class="button_dev" type="button">Desenvolvido por @lucns</button>

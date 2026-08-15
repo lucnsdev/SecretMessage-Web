@@ -42,18 +42,31 @@ function makeAction() {
 	var button = document.getElementById("button");
 	button.innerText = "Enviando...";
 	button.disabled = true;
+	button.style.visibility = 'hidden';
+	var loading = document.getElementById("div_loading");
+	loading.style.visibility = 'visible';
+
 	var inputText = document.getElementById("textarea_message");
 	inputText.disabled = true;
-
-	var params = {"message": inputText.value};
+	var params = { "message": inputText.value };
 	var http = new XMLHttpRequest();
+
 	http.open('POST', "../php/main.php", true);
 	http.onreadystatechange = function () {
 		//console.log("responseCode: " + http.status);
 		//console.log("state: " + http.readyState);
 		//console.log("responseText: " + http.responseText);
-		if (http.readyState == 4 && http.status == 204) {
-			window.location.replace("sent.htm");
+		if (http.readyState == 4) {
+			if (http.status == 204) {
+				window.location.replace("sent.htm");
+			} else {
+				var button = document.getElementById("button");
+				button.innerText = "Tentar Novamente";
+				button.disabled = false;
+				button.style.visibility = 'visible';
+				var loading = document.getElementById("div_loading");
+				loading.style.visibility = 'hidden';
+			}
 		}
 	}
 	http.send(JSON.stringify(params));
