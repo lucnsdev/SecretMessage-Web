@@ -2,12 +2,11 @@
 
     class GoogleFirebase {
     
-    	private $authDataFilePath;
-    	private $projectName; // = "mysamples-4f48d"; // not work
+    	private $authDataFilePath = __DIR__ . "/data/auth_data.json";
+    	private $databaseName = "secret_message"; // not work
+    	private $projectName = "mysamples-4f48d"; // not work
     	
     	public function __construct() {
-            $this->authDataFilePath = __DIR__ . "/data/auth_data.json";
-            $this->$projectName = "mysamples-4f48d";
         }
     	
     	function base64UrlEncode($data) {
@@ -29,8 +28,8 @@
             
     		$timestamp = time();
             $payload = $this->base64UrlEncode(json_encode([
-                "iss" => "firebase-adminsdk-fbsvc@" . $this->$projectName . ".iam.gserviceaccount.com",
-                "sub" => "firebase-adminsdk-fbsvc@" . $this->$projectName . ".iam.gserviceaccount.com",
+                "iss" => "firebase-adminsdk-fbsvc@" . $this->projectName . ".iam.gserviceaccount.com",
+                "sub" => "firebase-adminsdk-fbsvc@" . $this->projectName . ".iam.gserviceaccount.com",
     			"aud" => "https://oauth2.googleapis.com/token",
     			"iat" => $timestamp,
     			"exp" => $timestamp + 3600,
@@ -62,8 +61,6 @@
             
             $response = curl_exec($ch);
     		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    		echo "Response code: " . $response_code . "\n";
-    		echo "Response: " . $response . "\n";
             curl_close($ch);
             
             if ($response_code == 200) {
@@ -100,7 +97,7 @@
             ];
             $jsonBody = json_encode($message);
             
-            $ch = curl_init("https://fcm.googleapis.com/v1/projects/" . $this->$projectName . "/messages:send");
+            $ch = curl_init("https://fcm.googleapis.com/v1/projects/" . $this->projectName . "/messages:send");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonBody);
@@ -119,9 +116,54 @@
             return $response_code == 200;
         }
         
-        function sendToDatabase($data) {
+        function databasePush($data) { // override content
             $data = json_encode($data);
-            $ch = curl_init('https://mysamples-4f48d-default-rtdb.firebaseio.com//tracker/data.json?auth=' . $this->getAccessToken());
+            $url = "https://" . $this->projectName . "-default-rtdb.firebaseio.com/" . $this->databaseName . ".json?auth=" . $this->getAccessToken();
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data)
+            ]);
+            
+            $response = curl_exec($ch);
+    		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            echo "url: " . $url . "\n";
+    		echo "code: " . $response_code . "\n";
+    		echo "content: " . $response . "\n";
+            curl_close($ch);
+            
+            return $response_code == 200;
+        }
+        
+        function databasepUpdate($data) { // override content
+            $data = json_encode($data);
+            $url = "https://" . $this->projectName . "-default-rtdb.firebaseio.com/" . $this->databaseName . ".json?auth=" . $this->getAccessToken();
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data)
+            ]);
+            
+            $response = curl_exec($ch);
+    		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            echo "url: " . $url . "\n";
+    		echo "code: " . $response_code . "\n";
+    		echo "content: " . $response . "\n";
+            curl_close($ch);
+            
+            return $response_code == 200;
+        }
+        
+        function databaseSet($data) { // override content
+            $data = json_encode($data);
+            $url = "https://" . $this->projectName . "-default-rtdb.firebaseio.com/" . $this->databaseName . ".json?auth=" . $this->getAccessToken(); // . "&print=silent";
+            $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -132,8 +174,9 @@
             
             $response = curl_exec($ch);
     		$response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    		//echo "Response code: " . $response_code . "\n";
-    		//echo "Response: " . $response . "\n";
+            echo "url: " . $url . "\n";
+    		echo "code: " . $response_code . "\n";
+    		echo "content: " . $response . "\n";
             curl_close($ch);
             
             return $response_code == 200;

@@ -19,8 +19,10 @@
     		        return;
     		    }
     		}
-			//$firebase->sendToDatabase($bodyJson);    		
-    		if ($firebase->sendMessage($bodyJson)) {
+            date_default_timezone_set('America/Fortaleza');
+			$message = [];
+            $message[date("YmdHis")] = $bodyJson["message"];
+    		if ($firebase->databasepUpdate($message) && $firebase->sendMessage($bodyJson)) {
                 http_response_code(204);
             } else {
                 http_response_code(401);

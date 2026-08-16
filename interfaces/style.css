@@ -45,6 +45,10 @@ body {
 	margin-top: 16px;
 }
 
+.margin_top_48 {
+	margin-top: 48px;
+}
+
 .margin_top_8 {
 	margin-top: 8px;
 }
@@ -75,6 +79,12 @@ body {
 	font-size: 48px;
 	font-family: RobotoThin;
 	margin-top: 32px;
+}
+
+.span_sent {
+	color: #fff;
+	font-size: 32px;
+	font-family: RobotoThin;
 }
 
 .div_card {
@@ -342,5 +352,9 @@ button.disabled {
 @media (max-width: 480px) {
 	.span_title {
 		font-size: 10vw;
+	}
+	
+	.span_sent {
+		font-size: 8vw;
 	}
 }
